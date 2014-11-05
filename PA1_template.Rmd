@@ -22,8 +22,9 @@ head(datan)
 
 1.Make a histogram of the total number of steps taken each day
 ```{r,echo=TRUE}
-library(ggplot2)
-ggplot(datan,aes(date,steps))+geom_bar(stat="identity",fill="darkgreen",color="darkgreen",width=.5)+labs(title="Histogram of the Total Number of Steps Taken Each Day",x="Date",y="Total number of steps")
+hist(datan$steps, 
+     main="Histogram of the Total Number of Steps Taken Each Day",
+     xlab="total number of steps taken each day")
 ```
 
 2.Calculate and report the mean and median total number of steps taken per day
@@ -49,6 +50,7 @@ medianSteps
 ```{r,echo=TRUE}
 averageSteps<-aggregate(datan$steps,list(interval=as.numeric(as.character(datan$interval))),FUN="mean")
 colnames(averageSteps)[2]<-"stepsMean"
+library(ggplot2)
 ggplot(averageSteps,aes(interval,stepsMean))+geom_line(color="red",size=1)+labs(title="Time Series Plot of the 5-minute Interval",x="5-minute intervals",y="Average number of steps taken")
 ```
 
@@ -82,7 +84,9 @@ sum(is.na(dataNew))
 
 4.Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 ```{r,echo=TRUE}
-ggplot(dataNew,aes(date,steps))+geom_bar(stat="identity",fill="darkgreen",color="darkgreen",width=.5)+labs(title="Histogram of the Total Number of Steps Taken Each Day (without missing data)",x="Date",y="Total number of steps")
+hist(dataNew$steps,
+     main="Histogram of the Total Number of Steps Taken Each Day (NA replaced)",
+     xlab="total number of steps taken each day")
 totalStepsNew<-aggregate(dataNew$steps,list(Date=dataNew$date),FUN="sum")$x
 meanNew<-mean(totalStepsNew)
 meanNew
